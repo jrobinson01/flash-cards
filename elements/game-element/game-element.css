@@ -1,0 +1,14 @@
+.problem {
+  font-size: 32px;
+  padding: 5px;
+}
+.answer-input {
+  font-size: 32px;
+  color: white;
+  display: inline;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 2px solid white;
+  width: 100px;
+}

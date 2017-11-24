@@ -1,0 +1,15 @@
+{
+  "name": "flash_cards2",
+  "version": "0.0.2",
+  "description": "simple multiplication flash cards",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jrobinsonmedia@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^1.0.19",
+    "ta-dom-components": "^0.0.1"
+  }
+}
