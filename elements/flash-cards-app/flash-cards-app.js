@@ -47,7 +47,7 @@ export class FlashCardsApp extends TaDom.TaDomElement {
     // attempt to get user out of db??
     // this.currentView = FlashCardsApp.viewState.LOGIN;
   }
-
+  
   onLogin(username) {
     this.setState({
       currentView: FlashCardsApp.viewState.GAME,
