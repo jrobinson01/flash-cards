@@ -25,7 +25,7 @@ export class AnimatedElement extends TaDom.TaDomElement {
   static get properties() {
     return {
       visible: {
-        value: true,
+        value: false,
         reflectToAttribute: true
       }
     };

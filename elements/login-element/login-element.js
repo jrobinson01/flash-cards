@@ -25,14 +25,14 @@ export class LoginElement extends TaDom.TaDomElement {
 
   render() {
     return (
-      div(h3('Login'),
+      div(h3('Enter your name'),
         form({'on-submit': event => this.onSubmit(event)},
-              label({for: 'username'}, 'username:'),
+              label({for: 'username'}, 'Name:'),
           input({name: 'username',
                 type:'text',
                 value: this.username,
                 'on-input': event => this.username = event.target.value}),
-          button({type:'submit', disabled:this.username.trim().length === 0}, 'login'))
+          button({type:'submit', disabled:this.username.trim().length === 0}, 'Play!'))
       )
     )
 

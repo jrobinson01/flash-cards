@@ -44,10 +44,12 @@ export class FlashCardsApp extends TaDom.TaDomElement {
   }
 
   connectedCallback() {
-    // attempt to get user out of db??
-    // this.currentView = FlashCardsApp.viewState.LOGIN;
+    // TODO: get user out of db
+    // ...
+    super.connectedCallback();
+    this.currentView = FlashCardsApp.viewState.LOGIN;
   }
-  
+
   onLogin(username) {
     this.setState({
       currentView: FlashCardsApp.viewState.GAME,
@@ -74,7 +76,7 @@ export class FlashCardsApp extends TaDom.TaDomElement {
 
   onCorrectAnswer(event) {
     this.score += 1;
-    if (this.score > 10) {
+    if (this.score % 10 === 0) {
       this.level += 1;
     }
   }
