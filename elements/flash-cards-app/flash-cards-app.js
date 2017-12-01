@@ -5,7 +5,6 @@ import TaDom from '/node_modules/ta-dom-components/ta-dom-element.js';
 import {loginElement} from '/elements/login-element/login-element.js';
 import {mainControls} from '/elements/main-controls/main-controls.js';
 import {gameElement} from '/elements/game-element/game-element.js';
-import {animatedElement} from '/elements/animated-element.js';
 
 // import blocks
 import scoreBoard from '/blocks/score-board.js';
@@ -16,7 +15,17 @@ import db from '/util/db.js';
 export class FlashCardsApp extends TaDom.TaDomElement {
 
   static get css() {
-    return link({rel:'stylesheet', href:"/elements/flash-cards-app/flash-cards-app.css"});
+    return `
+      :host {
+        display: block;
+        color: white;
+        padding: 10px;
+      }
+
+      .loading {
+        color: #CCCCCC;
+      }
+    `
   }
 
   static get observedAttributes() {
@@ -38,16 +47,27 @@ export class FlashCardsApp extends TaDom.TaDomElement {
         value: {}
       },
       currentView: {
-        value: FlashCardsApp.viewState.LOGIN
+        value: ''
+      },
+      isLoading: {
+        value: false
       }
     }
   }
 
   connectedCallback() {
-    // TODO: get user out of db
-    // ...
     super.connectedCallback();
-    this.currentView = FlashCardsApp.viewState.LOGIN;
+    // TODO: get user out of db
+    this.isLoading = true;
+    db.get('user').then(data => {
+      console.log('got a user:', data);
+      this.isLoading = false;
+      this.currentView = FlashCardsApp.viewState.LOGIN;
+    }).catch((err)=> {
+      this.isLoading = false;
+      console.log('no user found!');
+      this.currentView = FlashCardsApp.viewState.LOGIN;
+    });
   }
 
   onLogin(username) {
@@ -55,8 +75,6 @@ export class FlashCardsApp extends TaDom.TaDomElement {
       currentView: FlashCardsApp.viewState.GAME,
       username
     });
-    // start the game!
-    this.shadowRoot.querySelector('game-element').nextProblem();
   }
 
   onQuit() {
@@ -85,23 +103,37 @@ export class FlashCardsApp extends TaDom.TaDomElement {
     // do something...
   }
 
+  maybeLoginView(currentView, {username}) {
+    if (currentView === FlashCardsApp.viewState.LOGIN) {
+      return loginElement(
+        {username: username,
+        'on-login': event => this.onLogin(event.detail.username)
+      });
+    }
+  }
+
+  maybeGameView(currentView, {level, score}) {
+    if (currentView === FlashCardsApp.viewState.GAME) {
+      return div(
+        gameElement({
+        'level': level,
+        'on-correct-answer': event => this.onCorrectAnswer(event),
+        'on-incorrect-answer': event => this.onIncorrectAnswer(event)}),
+      mainControls({
+        'on-quit':event => this.onQuit(),
+        'on-reset':event => this.onReset()
+      }),
+      scoreBoard({score: score, level: level}, {class:'score-board'}));
+    }
+  }
+
   render() {
-    return (
-      div(
-        animatedElement({visible: this.currentView === 'login'},
-          loginElement({username: this.username, 'on-login': event => this.onLogin(event.detail.username)})),
-        animatedElement({visible: this.currentView === 'game'},
-          gameElement({
-            'level': this.level,
-            'on-correct-answer': event => this.onCorrectAnswer(event),
-            'on-incorrect-answer': event => this.onIncorrectAnswer(event)}),
-          mainControls({
-            'on-quit':event => this.onQuit(),
-            'on-reset':event => this.onReset()
-          }),
-          scoreBoard({score: this.score, level: this.level}, {class:'score-board'})
-        )
-      )
+    if(this.isLoading) {
+      return div({class:'loading'},'loading...');
+    }
+    return div(
+      this.maybeLoginView(this.currentView, this.state_),
+      this.maybeGameView(this.currentView, this.state_)
     )
   }
 };

@@ -3,7 +3,24 @@ import TaDom from '/node_modules/ta-dom-components/ta-dom-element.js';
 export class LoginElement extends TaDom.TaDomElement {
 
   static get css() {
-    return link({rel:'stylesheet', href:'/elements/login-element/login-element.css'});
+    // return link({rel:'stylesheet', href:'/elements/login-element/login-element.css'});
+    return `
+    :host {
+      display: block;
+    }
+    form input {
+      display: block;
+      margin-bottom: 1em;
+    }
+    form label {
+      float: left;
+      margin-right: 0.5em;
+    }
+    button {
+      background-color: var(--button-bg-color);
+      color: var(--button-text-color);
+    }
+    `;
   }
 
   static get observedAttributes() {

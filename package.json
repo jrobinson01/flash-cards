@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@webcomponents/webcomponentsjs": "^1.0.19",
-    "ta-dom-components": "^0.0.7"
+    "ta-dom-components": "^0.0.8"
   }
 }

@@ -7,11 +7,6 @@ html, body {
   background-color: gray;
 }
 
-flash-cards-app {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
 
 :root {
   --button-bg-color: orange;
