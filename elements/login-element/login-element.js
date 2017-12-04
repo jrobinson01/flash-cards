@@ -7,18 +7,29 @@ export class LoginElement extends TaDom.TaDomElement {
     return `
     :host {
       display: block;
+      font-size: 2rem;
+      padding: 2rem 0;
     }
     form input {
       display: block;
-      margin-bottom: 1em;
-    }
-    form label {
-      float: left;
-      margin-right: 0.5em;
+      margin: 2rem auto;
+      background: none;
+      font-size: 2rem;
+      border: none;
+      text-align: center;
+      font-family: Quicksand, sans-serif;
+      color: var(--black);
+      border-bottom: 2px solid var(--black);
     }
     button {
-      background-color: var(--button-bg-color);
-      color: var(--button-text-color);
+      background: var(--blue);
+      margin: 1rem;
+      padding: 1rem 3rem;
+      font-size: 1.5rem;
+      font-family: Quicksand, sans-serif;
+      color: var(--white);
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
     }
     `;
   }
@@ -44,7 +55,6 @@ export class LoginElement extends TaDom.TaDomElement {
     return (
       div(h3('Enter your name'),
         form({'on-submit': event => this.onSubmit(event)},
-              label({for: 'username'}, 'Name:'),
           input({name: 'username',
                 type:'text',
                 value: this.username,

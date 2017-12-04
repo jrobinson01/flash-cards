@@ -7,22 +7,38 @@ export class GameElement extends TaDom.TaDomElement {
     // using a link results in the css file being reloaded everytime a new component is constructed.
     // return link({rel:'stylesheet', href:'/elements/game-element/game-element.css'});
     return `
+    #counter {
+      width: 5rem;
+      height: 5rem;
+      font-size: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 2rem auto;
+      border-radius: 50%;
+      border: .5rem solid var(--yellow);
+      box-shadow: var(--box-shadow);
+    }
     .problem {
-      font-size: 32px;
-      padding: 5px;
+      font-size: 3rem;
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 4px;
+      box-shadow: var(--box-shadow);
     }
     .answer-input {
-      font-size: 32px;
-      color: white;
+      font-family: Quicksand, sans-serif;
+      font-size: 3rem;
       display: inline;
       border: 0;
       outline: 0;
       background: transparent;
-      border-bottom: 2px solid white;
-      width: 100px;
+      border-bottom: 2px solid var(--black);
+      width: 6rem;
+      text-align: center;
     }
     .answer-input[wrong-answer] {
-      color: red;
+      color: var(--red);
     }`;
   }
 
@@ -142,7 +158,7 @@ export class GameElement extends TaDom.TaDomElement {
   render() {
     return (
       div(
-        h3('countdown: ', this.counter),
+        div({id: 'counter'}, this.counter),
         this.maybeBuzzer(this.wrongAnswer),
         form({class:'problem', 'on-submit':event => this.testAnswer(event)},
           this.problemElements(this.problem),

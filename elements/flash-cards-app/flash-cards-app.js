@@ -17,13 +17,26 @@ export class FlashCardsApp extends TaDom.TaDomElement {
   static get css() {
     return `
       :host {
+        border-top: solid 1rem var(--blue);
         display: block;
-        color: white;
         padding: 10px;
+        max-width: 400px;
+        background: var(--white);
+        border-radius: 4px;
+        margin: 2rem auto;
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        padding-bottom: 4rem;
       }
 
       .loading {
         color: #CCCCCC;
+      }
+      .score-board {
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.5rem;
+        margin: 2rem;
       }
     `
   }
@@ -119,11 +132,11 @@ export class FlashCardsApp extends TaDom.TaDomElement {
         'level': level,
         'on-correct-answer': event => this.onCorrectAnswer(event),
         'on-incorrect-answer': event => this.onIncorrectAnswer(event)}),
+      scoreBoard({score: score, level: level}, {class:'score-board'}),
       mainControls({
         'on-quit':event => this.onQuit(),
         'on-reset':event => this.onReset()
-      }),
-      scoreBoard({score: score, level: level}, {class:'score-board'}));
+      }));
     }
   }
 
